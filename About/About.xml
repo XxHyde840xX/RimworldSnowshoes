@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Snowshoes</name>
+	<author>udAL</author>
+	<url>https://github.com/udAL/RimworldSnowshoes</url>
+	<supportedVersions>
+		<li>1.1</li>
+	</supportedVersions>
+	<description>This mod adds snowshoes to travel faster on snow</description>
+	<packageId>udal.snowshoes.modkit</packageId>
+	<modDependencies>
+      <li>
+        <displayName>Harmony</displayName>
+        <packageId>brrainz.harmony</packageId>
+        <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      </li>
+    </modDependencies>
+	<loadAfter>
+      <li>Ludeon.RimWorld</li>
+      <li>Ludeon.RimWorld.Royalty</li>
+	  <li>brrainz.harmony</li>
+    </loadAfter>
+</ModMetaData>

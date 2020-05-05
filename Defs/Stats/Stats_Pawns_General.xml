@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<StatDef>
+		<defName>Pawn_CountersSnowPenalty</defName>
+		<label>counters snow penalty</label>
+		<description>Counteracts the penalty when walking on snow</description>
+		<category>BasicsPawn</category>
+		<defaultBaseValue>0</defaultBaseValue>
+		<minValue>0</minValue>
+		<hideAtValue>0</hideAtValue>
+		<maxValue>1</maxValue>
+		<showIfUndefined>false</showIfUndefined>
+		<toStringStyle>PercentOne</toStringStyle>
+		<capacityFactors>
+			<li>
+				<capacity>Moving</capacity>
+				<weight>1</weight>
+			</li>
+		</capacityFactors>
+		<parts>
+			<li Class="StatPart_ApparelStatOffset">
+				<apparelStat>CountersSnowPenalty</apparelStat>
+			  </li>
+		</parts>
+		<scenarioRandomizable>false</scenarioRandomizable>
+		<displayPriorityInCategory>2501</displayPriorityInCategory>
+	</StatDef>
+  
+</Defs>

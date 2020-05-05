@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<StatDef Name="CountersSnowPenalty">
+		<defName>CountersSnowPenalty</defName>
+		<label>counters snow penalty</label>
+		<labelForFullStatList>Counters snow penalty</labelForFullStatList>
+		<category>Apparel</category>
+		<description>Counteracts the penalty when walking on snow</description>
+		<defaultBaseValue>0</defaultBaseValue>
+		<minValue>0</minValue>
+		<hideAtValue>0</hideAtValue>
+		<maxValue>1</maxValue>
+		<showIfUndefined>false</showIfUndefined>
+		<toStringStyle>PercentOne</toStringStyle>
+		<parts> 
+			<li Class="StatPart_Quality">
+				<factorAwful>0.70</factorAwful>
+				<factorPoor>0.75</factorPoor>
+				<factorNormal>0.80</factorNormal>
+				<factorGood>0.85</factorGood>
+				<factorExcellent>0.90</factorExcellent>
+				<factorMasterwork>0.95</factorMasterwork>
+				<factorLegendary>1</factorLegendary>
+			</li>
+		</parts>
+	</StatDef>
+</Defs>
