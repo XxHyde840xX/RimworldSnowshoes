@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using RimWorld;
@@ -31,6 +32,9 @@ namespace Snowshoes
          */
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {
+            bool debug = false;
+            if (debug) Log.Message("Patch_PathFollower_CostToMoveIntoCell - Transpiler");
+
             List<CodeInstruction> code = instructions.ToList();
             int foundInstruction = -1;
             for (int i = 0; i < code.Count; i++)
@@ -44,31 +48,36 @@ namespace Snowshoes
                 }
             }
 
-            // Clear unnecessaty instructions preceding the call (arguments)
-            code.RemoveRange(foundInstruction - 7, 8);
-
-            CodeInstruction[] collection = new CodeInstruction[] {
-                // Load pawn into stack (argument 0)
-                new CodeInstruction(OpCodes.Ldarg_0, null),
-                // Load c into stack (argument 1)
-                new CodeInstruction(OpCodes.Ldarg_1, null),
-                // Call our own CalculatedCostAt (Patch_PathFollower_CostToMoveIntoCell.PathGrid_CalculatedCostAt())
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patch_PathFollower_CostToMoveIntoCell), nameof(PathGrid_CalculatedCostAt)))
-            };
-            // Insert into IL
-            code.InsertRange(foundInstruction - 7, collection);
-
-            // Debug Result IL
-            if (false)
+            if(foundInstruction != -1)
             {
-                Log.Message("--- SnowshoesHarmonyPatcher IL Result ---");
-                string debug = "";
-                for (int j = 0; j < code.Count; j++)
+                if (debug) Log.Message("Patch_PathFollower_CostToMoveIntoCell - Found Instruction");
+
+                // Clear unnecessaty instructions preceding the call (arguments)
+                code.RemoveRange(foundInstruction - 7, 8);
+
+                CodeInstruction[] collection = new CodeInstruction[] {
+                    // Load pawn into stack (argument 0)
+                    new CodeInstruction(OpCodes.Ldarg_0, null),
+                    // Load c into stack (argument 1)
+                    new CodeInstruction(OpCodes.Ldarg_1, null),
+                    // Call our own CalculatedCostAt (Patch_PathFollower_CostToMoveIntoCell.PathGrid_CalculatedCostAt())
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patch_PathFollower_CostToMoveIntoCell), nameof(PathGrid_CalculatedCostAt)))
+                };
+                // Insert into IL
+                code.InsertRange(foundInstruction - 7, collection);
+
+                // Debug Result IL
+                if (debug)
                 {
-                    debug += code[j].ToString() + "\r\n";
+                    Log.Message("--- SnowshoesHarmonyPatcher IL Result ---");
+                    string debugILMsg = "";
+                    for (int j = 0; j < code.Count; j++)
+                    {
+                        debugILMsg += code[j].ToString() + "\r\n";
+                    }
+                    Log.Message(debugILMsg);
+                    Log.Message("--- ---");
                 }
-                Log.Message(debug);
-                Log.Message("--- ---");
             }
 
             return code.AsEnumerable();
@@ -79,13 +88,41 @@ namespace Snowshoes
         {
             IntVec3 prevCell = Pawn.Position;
 
-            bool flag = false;
+            // Modified beahaviour:
+            // - Apply CountersIcePenalty and CountersSnowPenalty stats
+            // - When snow it's medium or thicker, terrain does not apply anymore.
+
             TerrainDef terrainDef = Pawn.Map.terrainGrid.TerrainAt(c);
             if (terrainDef == null || terrainDef.passability == Traversability.Impassable)
             {
                 return 10000;
             }
-            int num = terrainDef.pathCost;
+
+            // Get terrain path cost
+            int pcTerrain = terrainDef.pathCost;
+            if (terrainDef == TerrainDefOf.Ice)
+            {
+                // Apply counter ice penalty
+                pcTerrain = (int)Math.Ceiling((double)((float)pcTerrain * (1f - Pawn.GetStatValue(StatDef.Named("CountersIcePenalty"), true))));
+            }
+            // Get snow path cost
+            int pcSnow = SnowUtility.MovementTicksAddOn(Pawn.Map.snowGrid.GetCategory(c));
+            // Apply counter snow penalty
+            pcSnow = (int)Math.Ceiling((double)((float)pcSnow * (1f - Pawn.GetStatValue(StatDef.Named("CountersSnowPenalty"), true))));
+
+            int pc = 0;
+            if (Pawn.Map.snowGrid.GetCategory(c) >= SnowCategory.Medium)
+            {
+                // Snow is thick, we don't consider terrain path cost
+                pc = pcSnow;   
+            }
+            else
+            {
+                // Snow is thin, we apply the highest path cost
+                pc = pcTerrain > pcSnow ? pcTerrain : pcSnow;
+            }
+
+            bool flagDoor = false;
             List<Thing> list = Pawn.Map.thingGrid.ThingsListAt(c);
             for (int i = 0; i < list.Count; i++)
             {
@@ -96,10 +133,10 @@ namespace Snowshoes
                 }
                 if (!PathGrid_IsPathCostIgnoreRepeater(thing.def) || !prevCell.IsValid || !PathGrid_ContainsPathCostIgnoreRepeater(Pawn.Map, prevCell))
                 {
-                    int pathCost = thing.def.pathCost;
-                    if (pathCost > num)
+                    int pcThing = thing.def.pathCost;
+                    if (pcThing > pc)
                     {
-                        num = pathCost;
+                        pc = pcThing;
                     }
                 }
                 if (thing is Building_Door && prevCell.IsValid)
@@ -107,20 +144,16 @@ namespace Snowshoes
                     Building edifice = prevCell.GetEdifice(Pawn.Map);
                     if (edifice != null && edifice is Building_Door)
                     {
-                        flag = true;
+                        flagDoor = true;
                     }
                 }
             }
-            int num2 = SnowUtility.MovementTicksAddOn(Pawn.Map.snowGrid.GetCategory(c));
-            if (num2 > num)
+
+            if (flagDoor)
             {
-                num = num2;
+                pc += 45;
             }
-            if (flag)
-            {
-                num += 45;
-            }
-            return num;
+            return pc;
         }
 
         // Extracted private method PathGrid.IsPathCostIgnoreRepeater()

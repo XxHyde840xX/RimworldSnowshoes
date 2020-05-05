@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<StatDef Name="CountersSnowPenalty">
-		<defName>CountersSnowPenalty</defName>
+	<StatDef Name="CountersSnowPenaltyApparel">
+		<defName>CountersSnowPenaltyApparel</defName>
 		<label>counters snow penalty</label>
 		<labelForFullStatList>Counters snow penalty</labelForFullStatList>
 		<category>Apparel</category>
@@ -21,6 +21,31 @@
 				<factorExcellent>0.90</factorExcellent>
 				<factorMasterwork>0.95</factorMasterwork>
 				<factorLegendary>1</factorLegendary>
+			</li>
+		</parts>
+	</StatDef>
+	
+	<StatDef Name="CountersIcePenaltyApparel">
+		<defName>CountersIcePenaltyApparel</defName>
+		<label>counters ice penalty</label>
+		<labelForFullStatList>Counters ice penalty</labelForFullStatList>
+		<category>Apparel</category>
+		<description>Counteracts the penalty when walking on ice</description>
+		<defaultBaseValue>0</defaultBaseValue>
+		<minValue>0</minValue>
+		<hideAtValue>0</hideAtValue>
+		<maxValue>1</maxValue>
+		<showIfUndefined>false</showIfUndefined>
+		<toStringStyle>PercentOne</toStringStyle>
+		<parts> 
+			<li Class="StatPart_Quality">
+				<factorAwful>0.60</factorAwful>
+				<factorPoor>0.65</factorPoor>
+				<factorNormal>0.70</factorNormal>
+				<factorGood>0.75</factorGood>
+				<factorExcellent>0.80</factorExcellent>
+				<factorMasterwork>0.85</factorMasterwork>
+				<factorLegendary>0.9</factorLegendary>
 			</li>
 		</parts>
 	</StatDef>

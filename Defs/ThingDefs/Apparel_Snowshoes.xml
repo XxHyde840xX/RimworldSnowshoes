@@ -6,23 +6,18 @@
 		<selectable>True</selectable>
 		<pathCost>10</pathCost>
 		<useHitPoints>True</useHitPoints>
-		<techLevel>Neolithic</techLevel>
-		<graphicData>
-			<onGroundRandomRotateAngle>35</onGroundRandomRotateAngle>
-		</graphicData>
 		<drawGUIOverlay>true</drawGUIOverlay>
 		<statBases>
 			<MaxHitPoints>100</MaxHitPoints>
 			<Flammability>1.0</Flammability>
 			<DeteriorationRate>1</DeteriorationRate>
-			<SellPriceFactor>0.5</SellPriceFactor>
+			<SellPriceFactor>0.3</SellPriceFactor>
 			<Beauty>1</Beauty>
 		</statBases>
 		<altitudeLayer>Item</altitudeLayer>
 		<alwaysHaulable>True</alwaysHaulable>
 		<tickerType>Never</tickerType>
 		<burnableByRecipe>true</burnableByRecipe>
-		<smeltable>false</smeltable>
 		<comps>
 			<li Class="CompProperties_Forbiddable"/>
 			<li>
@@ -32,29 +27,30 @@
 	</ThingDef>
 
 	<ThingDef ParentName="ApparelSnowshoesBase">
-		<defName>Snowshoes</defName>
+		<defName>Apparel_Snowshoes</defName>
 		<label>snowshoes</label>
-		<description>Snowshoes are a lightweight platform for the foot that is designed to enable a person to walk on soft snow without sinking and that consists of an oblong frame crossed with leather thongs or synthetic material</description>
+		<description>Snowshoes are a lightweight platform for the foot that is designed to enable a person to walk on soft snow without sinking and that consists of an oblong frame crossed with leather thongs</description>
+		<techLevel>Neolithic</techLevel>
+		<smeltable>false</smeltable>
 		<costList>
-			<WoodLog>20</WoodLog>
+			<Leather_Patch>20</Leather_Patch>
 		</costList>
 		<costStuffCount>20</costStuffCount>	
 		<stuffCategories>
-			<li>Leathery</li>
+			<li>Woody</li>
 		</stuffCategories>
 		<graphicData>
 			<texPath>Things/Snowshoes/Snowshoes</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
-		<tickerType>Normal</tickerType>
 		<statBases>
 			<WorkToMake>5000</WorkToMake>
 			<Mass>0.5</Mass>
 			<EquipDelay>1.5</EquipDelay>
+			<CountersSnowPenaltyApparel>1</CountersSnowPenaltyApparel>
 		</statBases>
 		<equippedStatOffsets>
 			<MoveSpeed>-0.05</MoveSpeed>
-			<CountersSnowPenalty>1</CountersSnowPenalty>
 		</equippedStatOffsets>
 		<apparel>
 			<bodyPartGroups>
@@ -85,4 +81,106 @@
 		</recipeMaker>
 	</ThingDef>
 
+	<ThingDef ParentName="ApparelSnowshoesBase">
+		<defName>Apparel_Crampons</defName>
+		<label>crampons</label>
+		<description>Crampons are a metal plates with spikes for the foot that are designed to enable a person to walk on ice without slipping</description>
+		<techLevel>Industrial</techLevel>
+		<smeltable>true</smeltable>
+		<costList>
+			<Steel>20</Steel>
+			<Leather_Patch>10</Leather_Patch>
+		</costList>
+		<graphicData>
+			<texPath>Things/Snowshoes/Crampons</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<statBases>
+			<WorkToMake>7000</WorkToMake>
+			<Mass>0.6</Mass>
+			<EquipDelay>1.2</EquipDelay>
+			<CountersIcePenaltyApparel>1</CountersIcePenaltyApparel>
+		</statBases>
+		<equippedStatOffsets>
+			<MoveSpeed>-0.03</MoveSpeed>
+		</equippedStatOffsets>
+		<apparel>
+			<bodyPartGroups>
+				<li>Legs</li>
+			</bodyPartGroups>
+			<!-- <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Snowshoes/Snowshoes</wornGraphicPath> -->
+			<layers>
+				<li>Shell</li>
+			</layers>
+			<tags>
+				<li>Industrial</li>
+			</tags>
+		</apparel>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Smith</soundWorking>
+			<recipeUsers>
+				<li>ElectricSmithy</li>
+				<li>FueledSmithy</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>5</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedArmor</unfinishedThingDef>
+		</recipeMaker>
+	</ThingDef>
+	
+	<ThingDef ParentName="ApparelSnowshoesBase">
+		<defName>Apparel_SpikedSnowshoes</defName>
+		<label>spiked_snowshoes</label>
+		<description>Snowshoes are a lightweight platform for the foot that is designed to enable a person to walk on soft snow without sinking and that consists of an oblong frame crossed with leather thongs. This Snowshoes add a spiked metal plate to enableto walk on ice without slipping</description>
+		<techLevel>Industrial</techLevel>
+		<smeltable>true</smeltable>
+		<costList>
+			<Steel>30</Steel>
+			<Leather_Patch>20</Leather_Patch>
+		</costList>
+		<graphicData>
+			<texPath>Things/Snowshoes/SpikedSnowshoes</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<statBases>
+			<WorkToMake>9000</WorkToMake>
+			<Mass>0.8</Mass>
+			<EquipDelay>1.5</EquipDelay>
+			<CountersSnowPenaltyApparel>0.9</CountersSnowPenaltyApparel>
+			<CountersIcePenaltyApparel>0.9</CountersIcePenaltyApparel>
+		</statBases>
+		<equippedStatOffsets>
+			<MoveSpeed>-0.07</MoveSpeed>
+		</equippedStatOffsets>
+		<apparel>
+			<bodyPartGroups>
+				<li>Legs</li>
+			</bodyPartGroups>
+			<!-- <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Snowshoes/Snowshoes</wornGraphicPath> -->
+			<layers>
+				<li>Shell</li>
+			</layers>
+			<tags>
+				<li>Industrial</li>
+			</tags>
+		</apparel>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Smith</soundWorking>
+			<recipeUsers>
+				<li>ElectricSmithy</li>
+				<li>FueledSmithy</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>6</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedArmor</unfinishedThingDef>
+		</recipeMaker>
+	</ThingDef>
 </Defs>
