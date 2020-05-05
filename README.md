@@ -9,7 +9,7 @@ Original:
 - If snow on tile has bigges pathcost, this is the new pathcost
 
 Reworked:
-- If snow it's medium or thick, ignore terrain
+- If snow it's medium or thick, ignore terrain and use snow pathcost
 - Otherwise get the biggest pathcost between terrain and snow
 - If items on tile have bigger pathcost, this is the new pathcost
 	
