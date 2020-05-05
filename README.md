@@ -13,3 +13,4 @@ Reworked:
 - Otherwise get the biggest pathcost between terrain and snow
 - If items on tile have bigger pathcost, this is the new pathcost
 	
+Requires Harmony
