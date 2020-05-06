@@ -34,11 +34,8 @@
 		<smeltable>false</smeltable>
 		<costList>
 			<Leather_Patch>20</Leather_Patch>
+			<WoodLog>20</WoodLog>
 		</costList>
-		<costStuffCount>20</costStuffCount>	
-		<stuffCategories>
-			<li>Woody</li>
-		</stuffCategories>
 		<graphicData>
 			<texPath>Things/Snowshoes/Snowshoes</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
