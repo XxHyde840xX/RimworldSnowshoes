@@ -8,6 +8,7 @@ Requires Harmony
 ## Stats
 ### CountersSnowPenalty:
 Modifier applied to snow pathcost. Values float 0 to 1 (hide at 0)
+
 Depending on quality:
 - Awful 0.7
 - Poor 0.75
@@ -19,6 +20,7 @@ Depending on quality:
 
 ### CountersIcePenalty:
 Modifier applied to terrain pathcost when ice. Values float 0 to 1 (hide at 0)
+
 Depending on quality:
 - Awful 0.6
 - Poor 0.65
