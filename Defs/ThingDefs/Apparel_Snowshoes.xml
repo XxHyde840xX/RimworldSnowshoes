@@ -18,6 +18,9 @@
 		<alwaysHaulable>True</alwaysHaulable>
 		<tickerType>Never</tickerType>
 		<burnableByRecipe>true</burnableByRecipe>
+		<thingCategories>
+			<li>Apparel</li>
+		</thingCategories>
 		<comps>
 			<li Class="CompProperties_Forbiddable"/>
 			<li>

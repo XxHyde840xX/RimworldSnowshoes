@@ -6,7 +6,7 @@
 	<supportedVersions>
 		<li>1.1</li>
 	</supportedVersions>
-	<description>This mod adds snowshoes to travel faster on snow, crampons to travel faster on ice and spiked snowshoes for both</description>
+	<description>This mod adds snowshoes to travel faster on snow, crampons to travel faster on ice and spiked snowshoes for both. It also reworks how path cost it's calculated when dealing with snow.</description>
 	<packageId>udal.snowshoes.modkit</packageId>
 	<modDependencies>
       <li>
